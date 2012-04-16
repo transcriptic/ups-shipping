@@ -28,9 +28,8 @@ module Shipping
 
     def initialize(user, password, license, options={})
       @options = options
-      @test = @options[:spec]
       @access_request = access_request(user, password, license)
-      @http = Http.new(@access_request, :test => true)
+      @http = Http.new(@access_request, :test => @options[:test])
     end
 
     def validate_address(address)
