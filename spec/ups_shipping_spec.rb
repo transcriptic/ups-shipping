@@ -1,9 +1,30 @@
 require "rspec"
 require "ups_shipping"
+require "address"
 
 describe Shipping::UPS do
   before(:all) do
     @ups = Shipping::UPS.new("deanchen", "Transcriptic#1", "EC96D31A8D672E28", :test => true)
+  end
+  it "address object" do
+    @address = Shipping::Address.new(
+      :address_lines => ["1402 Faber St."],
+      :city => "Durham",
+      :state => "NC",
+      :zip => "27705",
+      :country => "US"
+    )
+
+    @address.to_xml.gsub(/^\s+/, "").gsub(/\s+$/, $/).should == '
+      <?xml version="1.0"?>
+      <Address>
+        <AddressLine1>1402 Faber St.</AddressLine1>
+        <City>Durham</City>
+        <StateProvinceCode>NC</StateProvinceCode>
+        <PostalCode>27705</PostalCode>
+        <CountryCode>US</CountryCode>
+      </Address>
+      '.gsub(/^\s+/, "").gsub(/\s+$/, $/)
   end
   it "#track_shipment" do
     tracking_result = @ups.track_shipment("1ZXX31290231000092")
