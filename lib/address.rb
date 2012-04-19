@@ -19,16 +19,19 @@ module Shipping
       @type = options[:type]
     end
 
+    def build(xml)
+      xml.Address {
+        xml.AddressLine1 @address_lines[0]
+        xml.City @city
+        xml.StateProvinceCode @state
+        xml.PostalCode @zip
+        xml.CountryCode @country
+      }
+    end
+
     def to_xml()
-      @address_lines[0]
       builder = Nokogiri::XML::Builder.new do |xml|
-        xml.Address {
-          xml.AddressLine1 @address_lines[0]
-          xml.City @city
-          xml.StateProvinceCode @state
-          xml.PostalCode @zip
-          xml.CountryCode @country
-        }
+        build(xml)
       end
       builder.to_xml
     end
