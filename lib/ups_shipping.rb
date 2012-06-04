@@ -1,7 +1,14 @@
 require "nokogiri"
 require "httparty"
+require 'ups_shipping/address'
+require 'ups_shipping/organization'
+require 'ups_shipping/package'
+require 'ups_shipping/pickup'
 
 module Shipping
+
+  VERSION = '1.0.0'
+
   class UPS
 
     TEST_URL = "https://wwwcie.ups.com"
