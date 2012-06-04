@@ -2,7 +2,7 @@ $:.unshift File.expand_path("../lib", __FILE__)
 require 'ups_shipping'
 
 Gem::Specification.new do |gem|
-  gem.name    = "ups-shipping"
+  gem.name    = "ups_shipping"
   gem.version = Shipping::VERSION
 
   gem.author      = "Transcriptic, Inc"
