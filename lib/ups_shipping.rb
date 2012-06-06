@@ -28,7 +28,6 @@ module Shipping
 
       def commit(url, request)
         request = @access_request + request
-        puts request
         self.class.post(url, :body => request).parsed_response
       end
     end
