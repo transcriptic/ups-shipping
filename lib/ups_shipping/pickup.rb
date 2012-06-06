@@ -2,10 +2,7 @@ require "nokogiri"
 
 module Shipping
   class Pickup
-    attr_accessor :address_lines
-    :pickup_day
-    :contact_method
-    :type
+    attr_accessor :address_lines, :pickup_day, :contact_method, :type
 
     def initialize(options={})
       @type = options[:type]

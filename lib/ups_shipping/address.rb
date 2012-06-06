@@ -3,12 +3,7 @@ require "nokogiri"
 module Shipping
   class Address
     ADDRESS_TYPES = %w{residential commercial po_box}
-    attr_accessor :address_lines
-                  :city
-                  :state
-                  :zip
-                  :country
-                  :type
+    attr_accessor :address_lines, :city, :state, :zip, :country, :type
 
     def initialize(options={})
       @address_lines = options[:address_lines]

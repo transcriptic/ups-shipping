@@ -2,12 +2,7 @@ require "nokogiri"
 
 module Shipping
   class Organization
-    attr_accessor :name
-                  :phone
-                  :email
-                  :address
-                  :shipper_number
-
+    attr_accessor :name, :phone, :email, :address, :shipper_number
 
     def initialize(options={})
       @name = options[:name]

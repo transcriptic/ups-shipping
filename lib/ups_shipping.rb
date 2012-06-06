@@ -7,7 +7,7 @@ require 'ups_shipping/pickup'
 
 module Shipping
 
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 
   class UPS
 
@@ -28,6 +28,7 @@ module Shipping
 
       def commit(url, request)
         request = @access_request + request
+        puts request
         self.class.post(url, :body => request).parsed_response
       end
     end
@@ -39,36 +40,40 @@ module Shipping
       @http = Http.new(@access_request, :test => @options[:test])
 
       @services = {
-          "01" => "Next Day Air",
-          "02" => "2nd Day Air",
-          "03" => "Ground",
-          "07" => "Express",
-          "08" => "Expedited",
-          "11" => "UPS Standard",
-          "12" => "3 Day Select",
-          "13" => "Next Day Air Saver",
-          "14" => "Next Day Air Early AM",
-          "54" => "Express Plus",
-          "59" => "2nd Day Air A.M.",
-          "65" => "UPS Saver",
-          "82" => "UPS Today Standard",
-          "83" => "UPS Today Dedicated Courier",
-          "84" => "UPS Today Intercity",
-          "85" => "UPS Today Express",
-          "86" => "UPS Today Express Saver"
+        "01" => "Next Day Air",
+        "02" => "2nd Day Air",
+        "03" => "Ground",
+        "07" => "Express",
+        "08" => "Expedited",
+        "11" => "UPS Standard",
+        "12" => "3 Day Select",
+        "13" => "Next Day Air Saver",
+        "14" => "Next Day Air Early AM",
+        "54" => "Express Plus",
+        "59" => "2nd Day Air A.M.",
+        "65" => "UPS Saver",
+        "82" => "UPS Today Standard",
+        "83" => "UPS Today Dedicated Courier",
+        "84" => "UPS Today Intercity",
+        "85" => "UPS Today Express",
+        "86" => "UPS Today Express Saver"
       }
-
     end
 
     def validate_address(address)
       validate_request = Nokogiri::XML::Builder.new do |xml|
         xml.AddressValidationRequest {
           xml.Request {
+            xml.TransactionReference {
+              xml.CustomerContext
+              xml.XpciVersion 1.0001
+            }
             xml.RequestAction "XAV"
             xml.RequestOption "3"
           }
+          xml.MaximumListSize 3
           xml.AddressKeyFormat {
-            xml.AddressLine address.address_line[0]
+            xml.AddressLine address.address_lines[0]
             xml.PoliticalDivision2 address.city
             xml.PoliticalDivision1 address.state
             xml.PostcodePrimaryLow address.zip

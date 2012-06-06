@@ -2,10 +2,7 @@ require "nokogiri"
 
 module Shipping
   class Package
-    attr_accessor :large
-                  :weight
-                  :description
-                  :monetary_value
+    attr_accessor :large, :weight, :description, :monetary_value
 
     def initialize(options={})
       @large = options[:large]
